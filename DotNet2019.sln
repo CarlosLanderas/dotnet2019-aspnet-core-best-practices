@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4EFF24CF-3D6A-4B08-8476-4CE3790A8D13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A8DA38D7-6521-419F-A05B-61B0B53BC897}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3BA8AA92-E155-4315-9107-C6BCF1091D1E}"
+	ProjectSection(SolutionItems) = preProject
+		build\dependencies.props = build\dependencies.props
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet2019.Host", "src\DotNet2019.Host\DotNet2019.Host.csproj", "{39E42FB2-78C1-43C2-9A8A-6576C7CBC6D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet2019.Api", "src\DotNet2019.Api\DotNet2019.Api.csproj", "{4B26FFAF-E9FC-469E-93C3-AD54F226EF15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39E42FB2-78C1-43C2-9A8A-6576C7CBC6D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39E42FB2-78C1-43C2-9A8A-6576C7CBC6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39E42FB2-78C1-43C2-9A8A-6576C7CBC6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39E42FB2-78C1-43C2-9A8A-6576C7CBC6D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B26FFAF-E9FC-469E-93C3-AD54F226EF15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B26FFAF-E9FC-469E-93C3-AD54F226EF15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B26FFAF-E9FC-469E-93C3-AD54F226EF15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B26FFAF-E9FC-469E-93C3-AD54F226EF15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{39E42FB2-78C1-43C2-9A8A-6576C7CBC6D1} = {4EFF24CF-3D6A-4B08-8476-4CE3790A8D13}
+		{4B26FFAF-E9FC-469E-93C3-AD54F226EF15} = {4EFF24CF-3D6A-4B08-8476-4CE3790A8D13}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {65823A5F-B3A4-4143-82CC-777300A81D03}
+	EndGlobalSection
+EndGlobal
