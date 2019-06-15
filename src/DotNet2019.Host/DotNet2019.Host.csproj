@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="$(AspNetCoreHealthChecksRedisVersion)" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="$(AspNetCoreHealthChecksSqlServerVersion)" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNet2019.Api\DotNet2019.Api.csproj" />
+  </ItemGroup>
 
 </Project>

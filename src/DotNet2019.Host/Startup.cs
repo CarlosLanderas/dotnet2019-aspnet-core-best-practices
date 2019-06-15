@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNet2019.Api;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,18 +15,16 @@ namespace DotNet2019.Host
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            Configuration.ConfigureServices(services);
+
+            services.AddCustomHealthChecks();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app
-            .UseRouting()
-            .UseEndpoints(endpoints =>
+            Configuration.Configure(app, host =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                return host.UseCustomHealthchecks();
             });
         }
     }

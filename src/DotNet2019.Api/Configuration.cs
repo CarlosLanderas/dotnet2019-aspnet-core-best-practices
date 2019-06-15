@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace DotNet2019.Api
         public static IServiceCollection ConfigureServices(IServiceCollection services)
         {
             return services
+
                 .AddMvc()
                 .Services;
         }
@@ -20,13 +22,14 @@ namespace DotNet2019.Api
             Func<IApplicationBuilder, IApplicationBuilder> configureHost)
         {
             return configureHost(app)
-                .UseEndpoints(endpoints =>
+            .UseRouting()
+            .UseEndpoints(endpoints =>
+            {
+                endpoints.MapGet("/", async context =>
                 {
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller=Home}/{action=Index}/{id?}");
-                    endpoints.MapRazorPages();
+                    await context.Response.WriteAsync("Hello World!");
                 });
+            });
         }
     }
 }
