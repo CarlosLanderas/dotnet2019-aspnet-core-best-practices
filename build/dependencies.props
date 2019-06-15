@@ -8,5 +8,6 @@
   <PropertyGroup Label="Package Versions">
     <AspNetCoreHealthChecksSqlServerVersion>2.2.0</AspNetCoreHealthChecksSqlServerVersion>
     <AspNetCoreHealthChecksRedisVersion>2.2.3</AspNetCoreHealthChecksRedisVersion>
+    <HellangMiddlewareProblemDetailsVersion>3.0.0</HellangMiddlewareProblemDetailsVersion>    
   </PropertyGroup>
 </Project>

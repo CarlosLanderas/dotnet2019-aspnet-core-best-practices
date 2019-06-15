@@ -1,20 +1,21 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DotNet2019.Api.Infrastructure.Middleware;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace DotNet2019.Api
 {
     public static class Configuration
     {
-        public static IServiceCollection ConfigureServices(IServiceCollection services)
+        public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
-            return services
+            return services                
                 .AddMvc()
-                .Services;            
+                .Services
+                .AddScoped<SecretMiddleware>()
+                .AddCustomProblemDetails(environment);
         }
 
         public static IApplicationBuilder Configure(
@@ -22,14 +23,17 @@ namespace DotNet2019.Api
             Func<IApplicationBuilder, IApplicationBuilder> configureHost)
         {
             return configureHost(app)
-            .UseRouting()
+            .UseRouting()            
             .UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });
+              {                  
+                  endpoints.MapControllerRoute(
+                         name: "default",
+                         pattern: "{controller=Home}/{action=Index}/{id?}");
+                  endpoints.MapRazorPages();
+
+                  endpoints.MapSecretEndpoint()
+
+              });
 
         }
     }
