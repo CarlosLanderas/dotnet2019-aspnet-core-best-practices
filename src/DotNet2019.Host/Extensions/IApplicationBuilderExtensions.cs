@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -20,6 +19,17 @@ namespace Microsoft.AspNetCore.Builder
             return app.UseHealthChecks("/ready", new HealthCheckOptions
             {
                 Predicate = registration => registration.Tags.Contains("dependencies")
+            });
+        }
+
+        public static IApplicationBuilder UseHeaderDiagnostics(this IApplicationBuilder app)
+        {         
+            return app.Use((context, next) =>
+            {                
+                var listener = app.ApplicationServices.GetService<DiagnosticListener>();
+                var headers = string.Join("|",context.Request.Headers.Values.Select(h => h.ToString()));
+                listener.StartActivity(new Activity("Api.Header.Diagnostics"), headers);
+                return next();
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+﻿using DotNet2019.Host.Diagnostics;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddRedis("server=localhost", tags: new[] { "dependencies" })
                 .AddCheck("self", () => HealthCheckResult.Healthy())
                 .Services;               
+        }
+
+        public static IServiceCollection AddHostingDiagnosticHandler(this IServiceCollection services)
+        {
+            return services.AddHostedService<HostingDiagnosticHandler>();
         }
 
     }

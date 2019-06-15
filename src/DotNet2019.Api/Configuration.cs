@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace DotNet2019.Api
@@ -12,9 +13,8 @@ namespace DotNet2019.Api
         public static IServiceCollection ConfigureServices(IServiceCollection services)
         {
             return services
-
                 .AddMvc()
-                .Services;
+                .Services;            
         }
 
         public static IApplicationBuilder Configure(
@@ -30,6 +30,7 @@ namespace DotNet2019.Api
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
+
         }
     }
 }

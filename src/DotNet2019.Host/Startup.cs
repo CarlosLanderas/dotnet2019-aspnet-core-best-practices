@@ -17,14 +17,19 @@ namespace DotNet2019.Host
         {
             Configuration.ConfigureServices(services);
 
-            services.AddCustomHealthChecks();
+            services
+             .AddCustomHealthChecks()
+            .AddHostingDiagnosticHandler();
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             Configuration.Configure(app, host =>
             {
-                return host.UseCustomHealthchecks();
+                return host
+                    .UseCustomHealthchecks()
+                    .UseHeaderDiagnostics();
             });
         }
     }

@@ -9,4 +9,8 @@
     <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="$(hellangmiddlewareproblemdetails)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\" />
+  </ItemGroup>
+
 </Project>
