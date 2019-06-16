@@ -4,4 +4,8 @@
     <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DotNet2019.Api\DotNet2019.Api.csproj" />
+  </ItemGroup>
+
 </Project>
