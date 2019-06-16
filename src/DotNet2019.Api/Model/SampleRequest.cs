@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DotNet2019.Api.Model
 {
@@ -12,7 +8,5 @@ namespace DotNet2019.Api.Model
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-
     }
-
 }

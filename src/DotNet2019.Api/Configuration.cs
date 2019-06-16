@@ -12,10 +12,10 @@ namespace DotNet2019.Api
         public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
             return services
-                .AddMvc()
+                .AddMvc()               
                 .AddApplicationPart(typeof(Configuration).Assembly)
                 .Services
-                .AddScoped<SecretMiddleware>()
+                .AddSingleton<SecretMiddleware>()
                 .AddSingleton<ErrorMiddleware>()
                 .AddCustomProblemDetails(environment)
                 .AddCustomApiBehaviour();

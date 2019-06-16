@@ -11,7 +11,7 @@ namespace Microsoft.AspNetCore.Builder
     {
         public static IEndpointConventionBuilder MapSecretEndpoint(this IEndpointRouteBuilder endpoints)
         {
-            var pipeline = endpoints.CreateApplicationBuilder()               
+            var pipeline = endpoints.CreateApplicationBuilder()           
                 .UseMiddleware<SecretMiddleware>()                
                 .Build();
 
