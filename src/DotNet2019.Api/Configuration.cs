@@ -1,4 +1,6 @@
 using DotNet2019.Api.Infrastructure.Middleware;
+using DotNet2019.Api.Infrastructure.Polly;
+using DotNet2019.Api.Services;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +20,11 @@ namespace DotNet2019.Api
                 .AddScoped<SecretMiddleware>()
                 .AddSingleton<ErrorMiddleware>()
                 .AddCustomProblemDetails(environment)
-                .AddCustomApiBehaviour();
+                .AddCustomApiBehaviour()
+                .AddHttpClient<ISomeService, SomeService>()
+                    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                    .AddPolicyHandler((serviceProvider, request) => RetryPolicy.GetPolicyWithJitterStrategy(serviceProvider))
+                 .Services;
         }
 
         public static IApplicationBuilder Configure(
