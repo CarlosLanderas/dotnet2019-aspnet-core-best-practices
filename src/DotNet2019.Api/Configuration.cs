@@ -2,11 +2,8 @@ using DotNet2019.Api.Infrastructure.Middleware;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System;
-using System.Threading.Tasks;
 
 namespace DotNet2019.Api
 {
@@ -19,7 +16,9 @@ namespace DotNet2019.Api
                 .AddApplicationPart(typeof(Configuration).Assembly)
                 .Services
                 .AddScoped<SecretMiddleware>()
-                .AddCustomProblemDetails(environment);
+                .AddSingleton<ErrorMiddleware>()
+                .AddCustomProblemDetails(environment)
+                .AddCustomApiBehaviour();
         }
 
         public static IApplicationBuilder Configure(
@@ -28,39 +27,19 @@ namespace DotNet2019.Api
         {
             return configureHost(app)
                 .UseProblemDetails()
-                .Use(CustomMiddleware)
-                .UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller=Home}/{action=Index}/{id?}");
-                })
                 .UseRouting()
                 .UseAuthentication()
                 .UseAuthorization()
+                .UseMiddleware<ErrorMiddleware>()
                 .UseEndpoints(endpoints =>
-                  {
-                      endpoints.MapControllerRoute(
-                             name: "default",
-                             pattern: "{controller=Home}/{action=Index}/{id?}");
-                      endpoints.MapRazorPages();
-
-                      endpoints.MapSecretEndpoint().RequireAuthorization("ApiKeyPolicy");
-
-                  });
-        }
-
-        private static Task CustomMiddleware(HttpContext context, Func<Task> next)
-        {
-            if (context.Request.Path.StartsWithSegments("/middleware", out _, out var remaining))
-            {
-                if (remaining.StartsWithSegments("/error"))
                 {
-                    throw new Exception("This is an exception thrown from middleware.");
-                }
-            }
+                    endpoints.MapControllerRoute(
+                            name: "default",
+                            pattern: "{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapRazorPages();
 
-            return next();
+                    endpoints.MapSecretEndpoint().RequireAuthorization("ApiKeyPolicy");
+                });
         }
     }
 }
