@@ -7,11 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4EFF24CF-3D6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A8DA38D7-6521-419F-A05B-61B0B53BC897}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3BA8AA92-E155-4315-9107-C6BCF1091D1E}"
-	ProjectSection(SolutionItems) = preProject
-		build\dependencies.props = build\dependencies.props
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet2019.Host", "src\DotNet2019.Host\DotNet2019.Host.csproj", "{39E42FB2-78C1-43C2-9A8A-6576C7CBC6D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet2019.Api", "src\DotNet2019.Api\DotNet2019.Api.csproj", "{4B26FFAF-E9FC-469E-93C3-AD54F226EF15}"
