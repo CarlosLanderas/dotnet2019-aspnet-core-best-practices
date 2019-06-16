@@ -39,6 +39,11 @@ namespace DotNet2019.Host.Diagnostics
             return Task.CompletedTask;
         }
 
+        public void OnNext(DiagnosticListener value)
+        {
+            _listenersSubscriptions.Add(value.Subscribe(this));
+        }
+
         public void OnNext(KeyValuePair<string, object> @event)
         {
             switch (@event.Key)
@@ -91,7 +96,7 @@ namespace DotNet2019.Host.Diagnostics
                 case "Microsoft.AspNetCore.Mvc.BeforeAction":
                     {
                         var context = GetProperty<HttpContext>(@event.Value, "httpContext");
-                        var requestId = context.Items["RequestId"].ToString();                        
+                        var requestId = context.Items["RequestId"].ToString();
                         var actionDescriptor = GetProperty<object>(@event.Value, "actionDescriptor");
                         var actionName = GetProperty<string>(actionDescriptor, "DisplayName");
                         traces[requestId].Append($"[Mvc Action] Executing {actionName}\n");
@@ -104,12 +109,12 @@ namespace DotNet2019.Host.Diagnostics
                         var requestId = context.Items["RequestId"].ToString();
 
                         var headers = GetProperty<string>(@event.Value, "Headers");
-                        traces[requestId].Append($"[Headers] {headers}\n");                        
+                        traces[requestId].Append($"[Headers] {headers}\n");
                     }
                     break;
 
                 case "Api.Diagnostics.ApiKey.Authentication.Success":
-                   {
+                    {
                         var context = GetContext(@event.Value);
                         var requestId = context.Items["RequestId"].ToString();
                         var apiKey = GetProperty<string>(@event.Value, "ApiKey");
@@ -118,19 +123,18 @@ namespace DotNet2019.Host.Diagnostics
                     break;
 
                 case "Microsoft.EntityFrameworkCore.Database.Command.CommandExecuting":
-                    {                    
-                        using(var scope = _scopeFactory.CreateScope())
+                    {
+                        using (var scope = _scopeFactory.CreateScope())
                         {
                             var context = scope.ServiceProvider.GetService<IHttpContextAccessor>().HttpContext;
                             var requestId = context.Items["RequestId"].ToString();
                             var payload = (CommandEventData)@event.Value;
                             traces[requestId].Append($"[EF Command] - {payload.Command.CommandText}\n");
-                        }                        
+                        }
                     }
                     break;
             }
         }
-
         private HttpContext GetContext(object value)
         {
             return (HttpContext)value.GetType().GetProperty("HttpContext").GetValue(value);
@@ -145,17 +149,10 @@ namespace DotNet2019.Host.Diagnostics
         {
 
         }
-
         public void OnError(Exception error)
         {
 
         }
-
-        public void OnNext(DiagnosticListener value)
-        {
-            _listenersSubscriptions.Add(value.Subscribe(this));
-        }
-
 
         public void Dispose()
         {
