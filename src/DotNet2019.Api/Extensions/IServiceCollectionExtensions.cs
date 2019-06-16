@@ -16,11 +16,11 @@ namespace Microsoft.Extensions.DependencyInjection
                });
 
         public static IServiceCollection AddCustomApiBehaviour(this IServiceCollection services)
-        {
+        {          
+
             return services.Configure<ApiBehaviorOptions>(options =>
-             {
-                 options.SuppressMapClientErrors = false;
-                 options.SuppressModelStateInvalidFilter = false;
+             {                 
+                 options.SuppressModelStateInvalidFilter = false;                 
                  options.SuppressInferBindingSourcesForParameters = false;
 
                  options.InvalidModelStateResponseFactory = context =>

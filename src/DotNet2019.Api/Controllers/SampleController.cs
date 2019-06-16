@@ -1,10 +1,11 @@
 ﻿using DotNet2019.Api.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNet2019.Api.Controllers
 {
     [ApiController]
-    [Route("api/sample")]   
+    [Route("api/sample")]
     public class SampleController : ControllerBase
     {
         [HttpPost, Route("")]

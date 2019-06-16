@@ -12,7 +12,7 @@ namespace DotNet2019.Api
         public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
             return services
-                .AddMvc()               
+                .AddMvc()
                 .AddApplicationPart(typeof(Configuration).Assembly)
                 .Services
                 .AddSingleton<SecretMiddleware>()
