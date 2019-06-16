@@ -13,5 +13,14 @@ namespace DotNet2019.Api.Controllers
             var isValid = ModelState.IsValid;
             return Ok();
         }
+
+        public IActionResult Get()
+        {
+            return Ok(new
+            {
+                Foo = 5,
+                Bar = 13
+            });
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,7 +41,7 @@ namespace DotNet2019.Api.Infrastructure.Middleware
                     var lineLength = (bytesConsumed + linePosition) - bytesConsumed;
 
                     if(lineLength > 1)
-                    {
+                    {                        
                         await writer.WriteAsync(startParagraph);
                         await writer.WriteAsync(fileContent.Slice(bytesConsumed, lineLength));
                         await writer.WriteAsync(endParagraph);

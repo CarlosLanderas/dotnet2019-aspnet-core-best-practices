@@ -27,8 +27,8 @@ namespace Microsoft.AspNetCore.Builder
             {                
                 var listener = app.ApplicationServices.GetService<DiagnosticListener>();
                 var headers = string.Join("|",context.Request.Headers.Values.Select(h => h.ToString()));
-                listener.StartActivity(new Activity("Api.Header.Diagnostics"), headers);
-                return next();
+                listener.Write("Api.Diagnostics.Headers", new { Headers = headers, HttpContext = context});
+                return next();                
             });
         }
     }
