@@ -36,7 +36,7 @@ namespace DotNet2019.Host
                     {
                         endpoints.MapGet("/", async context =>
                         {
-                            await context.Response.WriteAsync("Hello DotNet 2019!");
+                            await context.Response.WriteAsync($"Hello DotNet 2019! from {System.Environment.MachineName}");
                         });
                     })
             );

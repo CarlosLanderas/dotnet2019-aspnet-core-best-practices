@@ -10,10 +10,10 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddCustomHealthChecks(this IServiceCollection services)
         {
             return services.AddHealthChecks()
-                .AddSqlServer("server=localhost;initial catalog=master;user id=sa;password=Password12!",
+                .AddSqlServer("server=sqlserver;initial catalog=master;user id=sa;password=Password12!",
                     tags: new[] { "dependencies" })
 
-                .AddRedis("server=localhost",
+                .AddRedis("redis",
                     tags: new[] { "dependencies" })
 
                 .AddCheck("self", () => HealthCheckResult.Healthy())

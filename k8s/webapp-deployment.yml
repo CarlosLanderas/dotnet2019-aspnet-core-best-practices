@@ -15,7 +15,7 @@ spec:
           imagePullPolicy: Never
           livenessProbe:
             httpGet:
-              path: /self
+              path: /health
               port: 80
               scheme: HTTP
             initialDelaySeconds: 10
