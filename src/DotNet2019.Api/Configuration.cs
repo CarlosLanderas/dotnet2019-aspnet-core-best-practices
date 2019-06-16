@@ -1,6 +1,4 @@
 using DotNet2019.Api.Infrastructure.Middleware;
-using DotNet2019.Api.Infrastructure.Polly;
-using DotNet2019.Api.Services;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

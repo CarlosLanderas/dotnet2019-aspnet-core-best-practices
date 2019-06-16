@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DotNet2019.Api;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DotNet2019.Host
@@ -19,12 +14,11 @@ namespace DotNet2019.Host
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuration.ConfigureServices(services, Environment);
-            services
-            .AddCustomAuthentication()
-            .AddCustomAuthorization()
-            .AddCustomHealthChecks()
-            .AddHostingDiagnosticHandler();
+            Configuration.ConfigureServices(services, Environment)
+                .AddCustomAuthentication()
+                .AddCustomAuthorization()
+                .AddCustomHealthChecks()
+                .AddHostingDiagnosticHandler();
         }
 
         public void Configure(IApplicationBuilder app)
