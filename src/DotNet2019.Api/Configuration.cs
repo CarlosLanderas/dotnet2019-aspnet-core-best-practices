@@ -24,7 +24,7 @@ namespace DotNet2019.Api
                 .AddHttpClient<ISomeService, SomeService>()
                     .SetHandlerLifetime(TimeSpan.FromMinutes(5))
                     .AddPolicyHandler((serviceProvider, request) => RetryPolicy.GetPolicyWithJitterStrategy(serviceProvider))
-                 .Services;
+                .Services;
         }
 
         public static IApplicationBuilder Configure(

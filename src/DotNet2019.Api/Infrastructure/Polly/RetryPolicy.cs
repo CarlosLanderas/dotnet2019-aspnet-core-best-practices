@@ -41,7 +41,7 @@ namespace DotNet2019.Api.Infrastructure.Polly
                     onRetry: (outcome, timespan, retryAttempt, context) =>
                     {
                         serviceProvider.GetService<ILogger<SomeService>>()
-                            .LogWarning("Delaying for {delay}ms, then making retry {retry}.", timespan.TotalMilliseconds, retryAttempt);
+                            .LogWarning("Delaying for {delay}ms, then making retry {retry} with jitter strategy.", timespan.TotalMilliseconds, retryAttempt);
                     });
         }
     }
