@@ -40,11 +40,14 @@ namespace DotNet2019.Host.Infrastructure.Authentication
                 });
                 var ticket = new AuthenticationTicket(principal, "Test");
 
-
-                _listener.Write("Api.Diagnostics.ApiKey.Authentication.Success", new {
-                     HttpContext = Context,
-                     ApiKey = apiKey
-                });
+                if(_listener.IsEnabled())
+                {
+                    _listener.Write("Api.Diagnostics.ApiKey.Authentication.Success", new
+                    {
+                        HttpContext = Context,
+                        ApiKey = apiKey
+                    });
+                }              
                 
                 return Task.FromResult(AuthenticateResult.Success(ticket));
             }
