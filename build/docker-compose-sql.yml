@@ -1,0 +1,12 @@
+version : '3.7'
+
+services:
+  sqlserver:
+    image: microsoft/mssql-server-linux
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password12!
+    ports:
+      - 1434:1433
+  
