@@ -10,5 +10,11 @@
     <AspNetCoreHealthChecksRedisVersion>2.2.3</AspNetCoreHealthChecksRedisVersion>
     <HellangMiddlewareProblemDetailsVersion>3.0.1</HellangMiddlewareProblemDetailsVersion>
     <MicrosoftExtensionsHttpPolly>3.0.0-preview6.19304.6</MicrosoftExtensionsHttpPolly>
+    <FluentAssertions>5.6.0</FluentAssertions>
+    <Respawn>3.2.0</Respawn>
+    <xunit>2.4.1</xunit>
+    <xunitrunnervisualstudio>2.4.1</xunitrunnervisualstudio>
+    <MicrosoftNETTestSdk>16.0.1</MicrosoftNETTestSdk>
+    <AcheveTestHost>2.2.1</AcheveTestHost>
   </PropertyGroup>
 </Project>
