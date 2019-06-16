@@ -9,4 +9,10 @@
     <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="$(HellangMiddlewareProblemDetailsVersion)" />    
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="DataContent.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
