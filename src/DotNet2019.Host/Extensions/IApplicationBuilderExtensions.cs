@@ -13,7 +13,6 @@ namespace Microsoft.AspNetCore.Builder
             app.UseHealthChecks("/health", new HealthCheckOptions
             {
                 Predicate = registration => registration.Name.Equals("self")
-
             });
 
             return app.UseHealthChecks("/ready", new HealthCheckOptions

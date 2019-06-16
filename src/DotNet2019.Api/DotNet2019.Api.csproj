@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />    
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="$(HellangMiddlewareProblemDetailsVersion)" />    
   </ItemGroup>
 
