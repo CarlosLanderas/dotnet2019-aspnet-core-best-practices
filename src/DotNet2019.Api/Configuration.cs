@@ -1,43 +1,53 @@
-﻿using Hellang.Middleware.ProblemDetails;
+using DotNet2019.Api.Infrastructure.Middleware;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DotNet2019.Api
 {
     public static class Configuration
     {
-        public static IServiceCollection ConfigureServices(IServiceCollection services)
+        public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
             return services
                 .AddMvc()
                 .AddApplicationPart(typeof(Configuration).Assembly)
-                .Services;
+                .Services
+                .AddScoped<SecretMiddleware>()
+                .AddCustomProblemDetails(environment);
         }
 
         public static IApplicationBuilder Configure(
             IApplicationBuilder app,
-            IWebHostEnvironment environment,
             Func<IApplicationBuilder, IApplicationBuilder> configureHost)
         {
             return configureHost(app)
-                .UseProblemDetails(configure =>
-                {
-                    configure.IncludeExceptionDetails = _ => environment.IsDevelopment();
-                })
+                .UseProblemDetails()
                 .Use(CustomMiddleware)
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllerRoute(
                         name: "default",
                         pattern: "{controller=Home}/{action=Index}/{id?}");
-                });
+                })
+                .UseRouting()
+                .UseAuthentication()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                  {
+                      endpoints.MapControllerRoute(
+                             name: "default",
+                             pattern: "{controller=Home}/{action=Index}/{id?}");
+                      endpoints.MapRazorPages();
+
+                      endpoints.MapSecretEndpoint().RequireAuthorization("ApiKeyPolicy");
+
+                  });
         }
 
         private static Task CustomMiddleware(HttpContext context, Func<Task> next)
