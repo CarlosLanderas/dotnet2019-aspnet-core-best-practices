@@ -12,9 +12,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		build\dependencies.props = build\dependencies.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet2019.Host", "src\DotNet2019.Host\DotNet2019.Host.csproj", "{39E42FB2-78C1-43C2-9A8A-6576C7CBC6D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet2019.Host", "src\DotNet2019.Host\DotNet2019.Host.csproj", "{39E42FB2-78C1-43C2-9A8A-6576C7CBC6D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet2019.Api", "src\DotNet2019.Api\DotNet2019.Api.csproj", "{4B26FFAF-E9FC-469E-93C3-AD54F226EF15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNet2019.Api", "src\DotNet2019.Api\DotNet2019.Api.csproj", "{4B26FFAF-E9FC-469E-93C3-AD54F226EF15}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{049FEE46-A2B7-4F7F-A5DA-C7739D0725E3}"
+	ProjectSection(SolutionItems) = preProject
+		build\dependencies.props = build\dependencies.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{5C215ACC-BDB8-464F-AB51-D334308EB3F6}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\infra-deployment.yml = k8s\infra-deployment.yml
+		k8s\webapp-deployment.yml = k8s\webapp-deployment.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
