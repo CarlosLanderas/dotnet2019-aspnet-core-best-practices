@@ -13,7 +13,6 @@ namespace Microsoft.AspNetCore.Builder
             app.UseHealthChecks("/health", new HealthCheckOptions
             {
                 Predicate = registration => registration.Name.Equals("self")
-
             });
 
             return app.UseHealthChecks("/ready", new HealthCheckOptions
@@ -24,13 +23,20 @@ namespace Microsoft.AspNetCore.Builder
 
         public static IApplicationBuilder UseHeaderDiagnostics(this IApplicationBuilder app)
         {         
-            return app.Use((context, next) =>
-            {                
-                var listener = app.ApplicationServices.GetService<DiagnosticListener>();
-                var headers = string.Join("|",context.Request.Headers.Values.Select(h => h.ToString()));
-                listener.StartActivity(new Activity("Api.Header.Diagnostics"), headers);
-                return next();
-            });
+            var listener = app.ApplicationServices.GetService<DiagnosticListener>();
+
+            if (listener.IsEnabled())
+            {
+                return app.Use((context, next) =>
+                {
+                    var headers = string.Join("|", context.Request.Headers.Values.Select(h => h.ToString()));
+                    listener.Write("Api.Diagnostics.Headers", new { Headers = headers, HttpContext = context });
+                    return next();
+                });
+            }
+
+            return app;
+          
         }
     }
 }

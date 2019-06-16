@@ -4,6 +4,7 @@ using DotNet2019.Api.Services;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -14,17 +15,11 @@ namespace DotNet2019.Api
         public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
             return services
-                .AddMvc()
-                .AddApplicationPart(typeof(Configuration).Assembly)
-                .Services
-                .AddScoped<SecretMiddleware>()
-                .AddSingleton<ErrorMiddleware>()
+                .AddCustomMvc()
+                .AddCustomMiddlewares()
                 .AddCustomProblemDetails(environment)
                 .AddCustomApiBehaviour()
-                .AddHttpClient<ISomeService, SomeService>()
-                    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-                    .AddPolicyHandler((serviceProvider, request) => RetryPolicy.GetPolicyWithJitterStrategy(serviceProvider))
-                .Services;
+                .AddCustomServices();
         }
 
         public static IApplicationBuilder Configure(
@@ -43,6 +38,11 @@ namespace DotNet2019.Api
                             name: "default",
                             pattern: "{controller=Home}/{action=Index}/{id?}");
                     endpoints.MapRazorPages();
+
+                    endpoints.MapGet("/", async context =>
+                    {
+                        await context.Response.WriteAsync($"Hello DotNet 2019! from {System.Environment.MachineName}");
+                    });
 
                     endpoints.MapSecretEndpoint().RequireAuthorization("ApiKeyPolicy");
                 });

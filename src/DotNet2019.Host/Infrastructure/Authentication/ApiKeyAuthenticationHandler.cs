@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
@@ -13,14 +14,19 @@ namespace DotNet2019.Host.Infrastructure.Authentication
     public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyHandlerOptions>
     {
         public const string API_KEY_HEADER_NAME = "X-API-KEY";
+        private readonly DiagnosticListener _listener;
+
         public ApiKeyAuthenticationHandler(IOptionsMonitor<ApiKeyHandlerOptions> options, ILoggerFactory logger, UrlEncoder encoder,
-            ISystemClock clock)
-            : base(options, logger, encoder, clock) { }
+            ISystemClock clock, DiagnosticListener listener)
+            : base(options, logger, encoder, clock) {
+            _listener = listener;
+        }
 
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var apiKey = Context.Request.Headers[API_KEY_HEADER_NAME].FirstOrDefault();
+                    
 
             if (apiKey == null) return Task.FromResult(AuthenticateResult.NoResult());
 
@@ -34,6 +40,15 @@ namespace DotNet2019.Host.Infrastructure.Authentication
                 });
                 var ticket = new AuthenticationTicket(principal, "Test");
 
+                if(_listener.IsEnabled())
+                {
+                    _listener.Write("Api.Diagnostics.ApiKey.Authentication.Success", new
+                    {
+                        HttpContext = Context,
+                        ApiKey = apiKey
+                    });
+                }              
+                
                 return Task.FromResult(AuthenticateResult.Success(ticket));
             }
 

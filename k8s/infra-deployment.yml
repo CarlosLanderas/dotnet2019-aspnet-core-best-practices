@@ -1,0 +1,65 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sqlserver
+spec:
+
+  template:
+    metadata:
+      labels:
+        app: sqlserver
+    spec:
+      containers:       
+      - name: sqlserver
+        image: microsoft/mssql-server-linux
+        env:
+          - name : ACCEPT_EULA
+            value: "Y"
+          - name : SA_PASSWORD
+            value: "Password12!"       
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  sqlserver
+spec:
+  selector:
+    app:  sqlserver
+  type:  ClusterIP
+  ports:
+  - 
+    port:  1433
+    targetPort:  1433
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  redis
+spec:
+  selector:
+    app:  redis
+  type:  ClusterIP
+  ports:
+  - 
+    port:  6379
+    targetPort:  6379
+
+    

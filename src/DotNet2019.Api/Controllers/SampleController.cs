@@ -1,15 +1,10 @@
 ﻿using DotNet2019.Api.Model;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DotNet2019.Api.Controllers
 {
     [ApiController]
     [Route("api/sample")]
-    [AllowAnonymous]
     public class SampleController : ControllerBase
     {
         [HttpPost, Route("")]
@@ -17,6 +12,15 @@ namespace DotNet2019.Api.Controllers
         {
             var isValid = ModelState.IsValid;
             return Ok();
+        }
+
+        public IActionResult Get()
+        {
+            return Ok(new
+            {
+                Foo = 5,
+                Bar = 13
+            });
         }
     }
 }

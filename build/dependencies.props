@@ -8,6 +8,7 @@
   <PropertyGroup Label="Package Versions">
     <AspNetCoreHealthChecksSqlServerVersion>2.2.0</AspNetCoreHealthChecksSqlServerVersion>
     <AspNetCoreHealthChecksRedisVersion>2.2.3</AspNetCoreHealthChecksRedisVersion>
-    <HellangMiddlewareProblemDetailsVersion>3.0.1</HellangMiddlewareProblemDetailsVersion>    
+    <HellangMiddlewareProblemDetailsVersion>3.0.1</HellangMiddlewareProblemDetailsVersion>
+    <MicrosoftExtensionsHttpPolly>3.0.0-preview6.19304.6</MicrosoftExtensionsHttpPolly>
   </PropertyGroup>
 </Project>

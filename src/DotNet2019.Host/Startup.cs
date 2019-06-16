@@ -28,19 +28,7 @@ namespace DotNet2019.Host
         }
 
         public void Configure(IApplicationBuilder app)
-        {
-            Configuration.Configure(app, host =>
-                host
-                    .UseRouting()
-                    .UseEndpoints(endpoints =>
-                    {
-                        endpoints.MapGet("/", async context =>
-                        {
-                            await context.Response.WriteAsync("Hello DotNet 2019!");
-                        });
-                    })
-            );
-            
+        {           
             Configuration.Configure(app, host =>
             {
                 return host

@@ -1,12 +1,33 @@
-﻿using Hellang.Middleware.ProblemDetails;
+﻿using DotNet2019.Api.Infrastructure.Middleware;
+using DotNet2019.Api.Infrastructure.Polly;
+using DotNet2019.Api.Services;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class IServiceCollectionExtensions
     {
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services) =>
+            services
+                .AddMvc()
+                .AddApplicationPart(typeof(IServiceCollectionExtensions).Assembly)
+                .Services;
+
+        public static IServiceCollection AddCustomMiddlewares(this IServiceCollection services) =>
+            services
+                .AddSingleton<SecretMiddleware>()
+                .AddSingleton<ErrorMiddleware>();
+
+        public static IServiceCollection AddCustomServices(this IServiceCollection services) =>
+            services.
+                AddHttpClient<ISomeService, SomeService>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                .AddPolicyHandler((serviceProvider, request) => RetryPolicy.GetPolicyWithJitterStrategy(serviceProvider))
+                .Services;
 
         public static IServiceCollection AddCustomProblemDetails(this IServiceCollection services, IWebHostEnvironment environment) =>
            services
@@ -16,11 +37,11 @@ namespace Microsoft.Extensions.DependencyInjection
                });
 
         public static IServiceCollection AddCustomApiBehaviour(this IServiceCollection services)
-        {
+        {          
+
             return services.Configure<ApiBehaviorOptions>(options =>
-             {
-                 options.SuppressMapClientErrors = false;
-                 options.SuppressModelStateInvalidFilter = false;
+             {                 
+                 options.SuppressModelStateInvalidFilter = false;                 
                  options.SuppressInferBindingSourcesForParameters = false;
 
                  options.InvalidModelStateResponseFactory = context =>
