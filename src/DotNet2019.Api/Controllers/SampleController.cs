@@ -1,4 +1,5 @@
 ﻿using DotNet2019.Api.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ namespace DotNet2019.Api.Controllers
 {
     [ApiController]
     [Route("api/sample")]
+    [AllowAnonymous]
     public class SampleController : ControllerBase
     {
         [HttpPost, Route("")]

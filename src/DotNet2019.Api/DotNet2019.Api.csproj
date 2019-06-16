@@ -10,8 +10,4 @@
     <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="$(HellangMiddlewareProblemDetailsVersion)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\Authorization\" />
-  </ItemGroup>
-
 </Project>

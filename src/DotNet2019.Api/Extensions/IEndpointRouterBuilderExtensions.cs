@@ -11,12 +11,12 @@ namespace Microsoft.AspNetCore.Builder
     {
         public static IEndpointConventionBuilder MapSecretEndpoint(this IEndpointRouteBuilder endpoints)
         {
-            var pipeline = endpoints.CreateApplicationBuilder()
-                .UseMiddleware<SecretMiddleware>()
+            var pipeline = endpoints.CreateApplicationBuilder()               
+                .UseMiddleware<SecretMiddleware>()                
                 .Build();
 
             return endpoints.Map("/secret", pipeline);
-                
+
         }
     }
 }

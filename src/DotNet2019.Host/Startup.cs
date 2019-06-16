@@ -15,8 +15,10 @@ namespace DotNet2019.Host
         public void ConfigureServices(IServiceCollection services)
         {
             Configuration.ConfigureServices(services, Environment);
-
+                            
             services
+            .AddCustomAuthentication()
+            .AddCustomAuthorization()
             .AddCustomHealthChecks()
             .AddHostingDiagnosticHandler();
             
@@ -28,7 +30,7 @@ namespace DotNet2019.Host
             {
                 return host
                     .UseCustomHealthchecks()
-                    .UseHeaderDiagnostics();
+                    .UseHeaderDiagnostics();                   
             });
         }
     }

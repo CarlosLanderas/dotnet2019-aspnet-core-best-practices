@@ -11,7 +11,7 @@ namespace DotNet2019.Api
     {
         public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
-            return services                
+            return services
                 .AddMvc()
                 .Services
                 .AddScoped<SecretMiddleware>()
@@ -23,15 +23,17 @@ namespace DotNet2019.Api
             Func<IApplicationBuilder, IApplicationBuilder> configureHost)
         {
             return configureHost(app)
-            .UseRouting()            
+            .UseRouting()
+            .UseAuthentication()
+            .UseAuthorization()
             .UseEndpoints(endpoints =>
-              {                  
+              {
                   endpoints.MapControllerRoute(
                          name: "default",
                          pattern: "{controller=Home}/{action=Index}/{id?}");
                   endpoints.MapRazorPages();
 
-                  endpoints.MapSecretEndpoint()
+                  endpoints.MapSecretEndpoint().RequireAuthorization("ApiKeyPolicy");
 
               });
 
