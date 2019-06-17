@@ -16,5 +16,8 @@
     <xunitrunnervisualstudio>2.4.1</xunitrunnervisualstudio>
     <MicrosoftNETTestSdk>16.0.1</MicrosoftNETTestSdk>
     <AcheveTestHost>2.2.1</AcheveTestHost>
+    <MicrosoftEntityFrameworkCoreVersion>3.0.0-preview6.19304.10</MicrosoftEntityFrameworkCoreVersion>
+    <MicrosoftEntityFrameworkSqlServerVersion>3.0.0-preview6.19304.10</MicrosoftEntityFrameworkSqlServerVersion>
+    <MicrosoftEntityFrameworkCoreDesignVersion>3.0.0-preview6.19304.10</MicrosoftEntityFrameworkCoreDesignVersion> 
   </PropertyGroup>
 </Project>

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System;
@@ -10,22 +12,25 @@ using System.Threading.Tasks;
 
 namespace DotNet2019.Host.Diagnostics
 {
-    public class HostingDiagnosticHandler : IHostedService, IObserver<KeyValuePair<string, object>>, IDisposable
+    public class HostingDiagnosticHandler : IHostedService, IObserver<KeyValuePair<string, object>>, IObserver<DiagnosticListener>, IDisposable
     {
         private readonly DiagnosticListener _diagnosticListener;
+        private readonly IServiceScopeFactory _scopeFactory;
         private IDisposable _subscription;
+        private List<IDisposable> _listenersSubscriptions = new List<IDisposable>();
         private static Dictionary<string, StringBuilder> traces = new Dictionary<string, StringBuilder>();
         private string requestBegin = "---------- REQUEST {0} BEGIN ----------\n";
         private string requestEnd = "---------- REQUEST {0} END ----------\n";
 
-        public HostingDiagnosticHandler(DiagnosticListener diagnosticListener)
+        public HostingDiagnosticHandler(DiagnosticListener diagnosticListener, IServiceScopeFactory scopeFactory)
         {
             _diagnosticListener = diagnosticListener;
+            _scopeFactory = scopeFactory;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _subscription = _diagnosticListener.Subscribe(this);
+            _subscription = DiagnosticListener.AllListeners.Subscribe(this);
             return Task.CompletedTask;
         }
 
@@ -34,9 +39,9 @@ namespace DotNet2019.Host.Diagnostics
             return Task.CompletedTask;
         }
 
-        public void Dispose()
+        public void OnNext(DiagnosticListener value)
         {
-            _subscription.Dispose();
+            _listenersSubscriptions.Add(value.Subscribe(this));
         }
 
         public void OnNext(KeyValuePair<string, object> @event)
@@ -88,27 +93,48 @@ namespace DotNet2019.Host.Diagnostics
                     }
                     break;
 
+                case "Microsoft.AspNetCore.Mvc.BeforeAction":
+                    {
+                        var context = GetProperty<HttpContext>(@event.Value, "httpContext");
+                        var requestId = context.Items["RequestId"].ToString();
+                        var actionDescriptor = GetProperty<object>(@event.Value, "actionDescriptor");
+                        var actionName = GetProperty<string>(actionDescriptor, "DisplayName");
+                        traces[requestId].Append($"[Mvc Action] Executing {actionName}\n");
+                    }
+                    break;
+
                 case "Api.Diagnostics.Headers":
                     {
                         var context = GetContext(@event.Value);
                         var requestId = context.Items["RequestId"].ToString();
 
                         var headers = GetProperty<string>(@event.Value, "Headers");
-                        traces[requestId].Append($"[Headers] {headers}\n");                        
+                        traces[requestId].Append($"[Headers] {headers}\n");
                     }
                     break;
 
                 case "Api.Diagnostics.ApiKey.Authentication.Success":
-                   {
+                    {
                         var context = GetContext(@event.Value);
                         var requestId = context.Items["RequestId"].ToString();
                         var apiKey = GetProperty<string>(@event.Value, "ApiKey");
                         traces[requestId].Append($"[Api Key Authentication] User logged with api key: {apiKey}\n");
                     }
                     break;
+
+                case "Microsoft.EntityFrameworkCore.Database.Command.CommandExecuting":
+                    {
+                        using (var scope = _scopeFactory.CreateScope())
+                        {
+                            var context = scope.ServiceProvider.GetService<IHttpContextAccessor>().HttpContext;
+                            var requestId = context.Items["RequestId"].ToString();
+                            var payload = (CommandEventData)@event.Value;
+                            traces[requestId].Append($"[EF Command] - {payload.Command.CommandText}\n");
+                        }
+                    }
+                    break;
             }
         }
-
         private HttpContext GetContext(object value)
         {
             return (HttpContext)value.GetType().GetProperty("HttpContext").GetValue(value);
@@ -123,12 +149,18 @@ namespace DotNet2019.Host.Diagnostics
         {
 
         }
-
         public void OnError(Exception error)
         {
 
         }
 
-
+        public void Dispose()
+        {
+            _subscription.Dispose();
+            foreach (var listenerSubscription in _listenersSubscriptions)
+            {
+                listenerSubscription.Dispose();
+            }
+        }
     }
 }

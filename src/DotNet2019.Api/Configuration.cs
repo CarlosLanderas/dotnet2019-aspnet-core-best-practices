@@ -1,8 +1,10 @@
+using DotNet2019.Api.Infrastructure.Data;
 using DotNet2019.Api.Infrastructure.Middleware;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -13,11 +15,16 @@ namespace DotNet2019.Api
         public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
             return services
+                .AddHttpContextAccessor()
                 .AddCustomMvc()
                 .AddCustomMiddlewares()
                 .AddCustomProblemDetails(environment)
                 .AddCustomApiBehaviour()
-                .AddCustomServices();
+                .AddCustomServices()
+                .AddDbContext<DataContext>(options =>
+                {
+                    options.UseSqlServer("server=localhost,1434;initial catalog=dotnet2019;user id=sa; password=Password12!");
+                });
         }
 
         public static IApplicationBuilder Configure(
