@@ -9,11 +9,11 @@ namespace DotNet2019.Api.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class SampleController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public SampleController(DataContext context)
+        public UsersController(DataContext context)
         {
             _context = context;
         }
