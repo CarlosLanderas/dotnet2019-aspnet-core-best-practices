@@ -142,7 +142,14 @@ namespace DotNet2019.Host.Diagnostics
 
         private T GetProperty<T>(object value, string property)
         {
-            return (T)value.GetType().GetProperty(property).GetValue(value);
+            var prop = value.GetType().GetProperty(property);
+            if (prop != null)
+            {
+                return (T)prop.GetValue(value);
+            }
+
+            return default(T);
+            
         }
 
         public void OnCompleted()
