@@ -1,0 +1,10 @@
+version: '3'
+services:
+  functionaltests:
+    image: functionaltests
+    build:
+      context: ..
+      dockerfile:  ./test/FunctionalTests/Dockerfile
+    entrypoint: tail -f /dev/null
+    volumes:
+      - .test-results/:/var/temp
