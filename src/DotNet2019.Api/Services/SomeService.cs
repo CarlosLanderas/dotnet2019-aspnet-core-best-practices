@@ -15,7 +15,7 @@ namespace DotNet2019.Api.Services
 
         public Task<string> Ping()
         {
-            return httpClient.GetStringAsync("https://localhost:5001/api/error");
+            return httpClient.GetStringAsync("http://localhost:5001/api/error");
         }
     }
 }
