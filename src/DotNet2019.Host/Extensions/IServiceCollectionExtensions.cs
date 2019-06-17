@@ -1,11 +1,19 @@
-﻿using DotNet2019.Host.Diagnostics;
+﻿using DotNet2019.Api.Infrastructure.Data;
+using DotNet2019.Host.Diagnostics;
 using DotNet2019.Host.Infrastructure.Authentication;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class IServiceCollectionExtensions
     {
+        public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+            });
 
         public static IServiceCollection AddCustomHealthChecks(this IServiceCollection services)
         {

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using DotNet2019.Api.Infrastructure.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using System.IO;
-using Microsoft.Extensions.Hosting;
-using DotNet2019.Api.Infrastructure.Data;
-using Respawn;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Respawn;
+using System.IO;
 
 namespace FunctionalTests.Seedwork
 {

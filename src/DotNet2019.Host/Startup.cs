@@ -21,10 +21,7 @@ namespace DotNet2019.Host
         public void ConfigureServices(IServiceCollection services)
         {
             Api.Configuration.ConfigureServices(services, Environment)
-                .AddDbContext<DataContext>(options =>
-                {
-                    options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
-                })
+                .AddEntityFrameworkCore(Configuration)
                 .AddCustomAuthentication()
                 .AddCustomAuthorization()
                 .AddCustomHealthChecks()
