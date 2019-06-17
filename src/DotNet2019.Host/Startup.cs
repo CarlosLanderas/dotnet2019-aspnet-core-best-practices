@@ -1,20 +1,30 @@
 using DotNet2019.Api;
+using DotNet2019.Api.Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DotNet2019.Host
 {
     public class Startup
     {
-        private IWebHostEnvironment Environment { get; set; }
-        public Startup(IWebHostEnvironment environment)
+        public IConfiguration Configuration { get; }
+        private IWebHostEnvironment Environment { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
+            Configuration = configuration;
             Environment = environment;
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuration.ConfigureServices(services, Environment)
+            Api.Configuration.ConfigureServices(services, Environment)
+                .AddDbContext<DataContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
+                })
                 .AddCustomAuthentication()
                 .AddCustomAuthorization()
                 .AddCustomHealthChecks()
@@ -23,7 +33,7 @@ namespace DotNet2019.Host
 
         public void Configure(IApplicationBuilder app)
         {           
-            Configuration.Configure(app, host =>
+            Api.Configuration.Configure(app, host =>
             {
                 return host
                     .UseCustomHealthchecks()

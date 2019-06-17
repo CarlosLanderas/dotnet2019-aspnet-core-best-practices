@@ -10,14 +10,16 @@
     <AspNetCoreHealthChecksRedisVersion>2.2.3</AspNetCoreHealthChecksRedisVersion>
     <HellangMiddlewareProblemDetailsVersion>3.0.1</HellangMiddlewareProblemDetailsVersion>
     <MicrosoftExtensionsHttpPolly>3.0.0-preview6.19304.6</MicrosoftExtensionsHttpPolly>
-    <FluentAssertions>5.6.0</FluentAssertions>
+    <FluentAssertions>5.7.0</FluentAssertions>
     <Respawn>3.2.0</Respawn>
     <xunit>2.4.1</xunit>
     <xunitrunnervisualstudio>2.4.1</xunitrunnervisualstudio>
-    <MicrosoftNETTestSdk>16.0.1</MicrosoftNETTestSdk>
+    <MicrosoftNETTestSdk>16.2.0-preview-20190606-02</MicrosoftNETTestSdk>
     <AcheveTestHost>2.2.1</AcheveTestHost>
+    <MicrosoftAspNetCoreTestHost>3.0.0-preview6.19307.2</MicrosoftAspNetCoreTestHost>
     <MicrosoftEntityFrameworkCoreVersion>3.0.0-preview6.19304.10</MicrosoftEntityFrameworkCoreVersion>
     <MicrosoftEntityFrameworkSqlServerVersion>3.0.0-preview6.19304.10</MicrosoftEntityFrameworkSqlServerVersion>
-    <MicrosoftEntityFrameworkCoreDesignVersion>3.0.0-preview6.19304.10</MicrosoftEntityFrameworkCoreDesignVersion> 
+    <MicrosoftEntityFrameworkCoreDesignVersion>3.0.0-preview6.19304.10</MicrosoftEntityFrameworkCoreDesignVersion>
+    <Respawn>3.2.0</Respawn>
   </PropertyGroup>
 </Project>

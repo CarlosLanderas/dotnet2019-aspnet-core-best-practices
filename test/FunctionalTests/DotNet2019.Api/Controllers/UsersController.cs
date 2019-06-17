@@ -12,25 +12,26 @@ namespace FunctionalTests.DotNet2019.Api.Controllers
 {
     [Collection(nameof(ServerFixtureCollection))]
     [ExcludeFromCodeCoverage]
-    public class sample_api_should
+    public class users_api_should
     {
         private readonly ServerFixture Given;
 
-        public sample_api_should(ServerFixture fixture)
+        public users_api_should(ServerFixture fixture)
         {
             Given = fixture ?? throw new ArgumentNullException(nameof(fixture));
         }
 
         [Fact]
-        public async Task allow_to_add_samples()
+        [ResetDatabase]
+        public async Task allow_to_add_users()
         {
-            var request = Builders.Sample
+            var request = Builders.UserRequest
                 .WithName("Test")
                 .Build();
 
             var response = await Given
                 .Server
-                .CreateRequest(Api.Portals.Post())
+                .CreateRequest(Api.Users.Post())
                 .WithJsonBody(request)
                 .PostAsync();
 

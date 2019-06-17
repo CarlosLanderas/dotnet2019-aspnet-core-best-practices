@@ -2,26 +2,24 @@
 
 namespace FunctionalTests.Seedwork.Builders
 {
-    internal class SampleBuilder
+    internal class UserRequestBuilder
     {
         string name = "Test Portal";
-        int id = 1;
 
-        public SampleBuilder()
+        public UserRequestBuilder()
         {
         }
 
-        public SampleBuilder WithName(string name)
+        public UserRequestBuilder WithName(string name)
         {
             this.name = name;
             return this;
         }
 
-        public SampleRequest Build()
+        public UserRequest Build()
         {
-            return new SampleRequest
+            return new UserRequest
             {
-                Id = id,
                 Name = name
             };
         }

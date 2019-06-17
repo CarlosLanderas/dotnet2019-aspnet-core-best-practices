@@ -12,5 +12,5 @@ function Exec
 }
 
 exec { & docker-compose -f .\build\docker-compose-buildagent.yml up --build -d }
-exec { & docker-compose -f .\build\docker-compose-buildagent.yml exec functionaltests dotnet test test/FunctionalTests/FunctionalTests.csproj -p:ParallelizeTestCollections=false --logger trx --results-directory /var/temp }
+exec { & docker-compose -f .\build\docker-compose-buildagent.yml exec -e 'ConnectionStrings__SqlServer=Server=sqlserver;User Id=sa;Password=Password12!;Initial Catalog=FunctionalTests;MultipleActiveResultSets=true' functionaltests dotnet test test/FunctionalTests/FunctionalTests.csproj -p:ParallelizeTestCollections=false --logger trx --results-directory /var/temp }
 exec { & docker-compose -f .\build\docker-compose-buildagent.yml down }

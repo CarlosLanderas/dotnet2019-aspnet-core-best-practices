@@ -2,11 +2,11 @@
 {
     internal static class Api
     {
-        public static class Portals
+        public static class Users
         {
             public static string Post()
             {
-                return $"api/sample";
+                return $"api/users";
             }
         }
     }

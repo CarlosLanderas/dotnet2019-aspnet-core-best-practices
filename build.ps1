@@ -26,7 +26,7 @@ echo "Running functional tests"
 
 try {
 
-Push-Location -Path .\tests\FunctionalTests
+Push-Location -Path .\test\FunctionalTests
         exec { & dotnet test}
 } finally {
         Pop-Location

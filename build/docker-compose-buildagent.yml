@@ -6,5 +6,15 @@ services:
       context: ..
       dockerfile:  ./test/FunctionalTests/Dockerfile
     entrypoint: tail -f /dev/null
+    depends_on: 
+      - sqlserver
     volumes:
       - .test-results/:/var/temp
+  sqlserver:
+    image: microsoft/mssql-server-linux
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password12!
+    ports:
+      - 1434:1433

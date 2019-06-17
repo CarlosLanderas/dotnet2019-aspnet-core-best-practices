@@ -2,11 +2,11 @@
 {
     internal static class Builders
     {
-        public static SampleBuilder Sample
+        public static UserRequestBuilder UserRequest
         {
             get
             {
-                return new SampleBuilder();
+                return new UserRequestBuilder();
             }
         }
     }

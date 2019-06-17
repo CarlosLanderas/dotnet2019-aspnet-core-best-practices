@@ -20,11 +20,7 @@ namespace DotNet2019.Api
                 .AddCustomMiddlewares()
                 .AddCustomProblemDetails(environment)
                 .AddCustomApiBehaviour()
-                .AddCustomServices()
-                .AddDbContext<DataContext>(options =>
-                {
-                    options.UseSqlServer("server=localhost,1434;initial catalog=dotnet2019;user id=sa; password=Password12!");
-                });
+                .AddCustomServices();
         }
 
         public static IApplicationBuilder Configure(

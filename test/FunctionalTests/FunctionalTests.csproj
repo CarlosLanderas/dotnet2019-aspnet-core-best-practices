@@ -5,7 +5,6 @@
     <IsPackable>false</IsPackable>
     <LangVersion>$(LangVersion)</LangVersion>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <UserSecretsId>SGUKFunctionalTests</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,9 +19,10 @@
 
   <ItemGroup>
     <PackageReference Include="Acheve.TestHost" Version="$(AcheveTestHost)" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0-preview-20190606-02" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.0.0-preview6.19307.2" />
-    <PackageReference Include="FluentAssertions" Version="5.7.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdk)" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="$(MicrosoftAspNetCoreTestHost)" />
+    <PackageReference Include="FluentAssertions" Version="$(FluentAssertions)" />
+    <PackageReference Include="Respawn" Version="$(Respawn)" />
     <PackageReference Include="xunit" Version="$(xunit)" />
     <PackageReference Include="xunit.runner.visualstudio" Version="$(xunitrunnervisualstudio)" />
   </ItemGroup>

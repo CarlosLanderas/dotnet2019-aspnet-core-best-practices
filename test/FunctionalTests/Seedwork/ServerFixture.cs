@@ -2,11 +2,20 @@
 using Microsoft.AspNetCore.TestHost;
 using System.IO;
 using Microsoft.Extensions.Hosting;
+using DotNet2019.Api.Infrastructure.Data;
+using Respawn;
+using Microsoft.Extensions.Configuration;
 
 namespace FunctionalTests.Seedwork
 {
     public class ServerFixture
     {
+        static Checkpoint _checkpoint = new Checkpoint()
+        {
+            TablesToIgnore = new string[] { "__EFMigrationsHistory" },
+            WithReseed = true
+        };
+
         public TestServer Server { get; private set; }
 
         public ServerFixture()
@@ -20,6 +29,12 @@ namespace FunctionalTests.Seedwork
 
             var host = Host.CreateDefaultBuilder()
                  .UseContentRoot(Directory.GetCurrentDirectory())
+                 .ConfigureAppConfiguration(builder =>
+                 {
+                     builder
+                        .AddJsonFile("appsettings.json", optional: true)
+                        .AddEnvironmentVariables();
+                 })
                  .ConfigureWebHostDefaults(webBuilder =>
                  {
                      webBuilder
@@ -28,8 +43,23 @@ namespace FunctionalTests.Seedwork
                  }).Build();
 
             host.StartAsync().Wait();
+            host.MigrateDatabase<DataContext>();
 
             Server = host.GetTestServer();
+        }
+
+        internal static void ResetDatabase()
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            var connectionString = configuration
+                .GetConnectionString("SqlServer");
+
+            var task = _checkpoint.Reset(connectionString);
+            task.Wait();
         }
     }
 }

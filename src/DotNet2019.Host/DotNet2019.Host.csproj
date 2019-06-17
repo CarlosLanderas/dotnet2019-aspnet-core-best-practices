@@ -16,4 +16,10 @@
     <ProjectReference Include="..\DotNet2019.Api\DotNet2019.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
