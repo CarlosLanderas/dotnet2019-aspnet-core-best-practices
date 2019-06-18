@@ -12,7 +12,7 @@ Luis Ruiz Pavón - DevSecOps Lead at Plain Concepts ( [Github](https://github.co
 
 - Code instrumentation using System Diagnostics
 - Application resilience strategies
-- Asp.Net Core HealthChecks and Orchestrators (KubernetesReadiness and Liveness Probes) for high availability and resilience
+- Asp.Net Core HealthChecks and Kubernetes (Readiness and Liveness Probes) for high availability and resilience
 - Problem Details RFC 7807
 - Asp.Net Core ApiController and ApiBehaviourOptions (Convention over Configuration)
 - HttpContext Pipelines
