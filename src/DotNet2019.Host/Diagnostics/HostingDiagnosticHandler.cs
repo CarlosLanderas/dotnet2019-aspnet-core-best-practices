@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DotNet2019.Api.Infrastructure.Hubs;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,16 +18,18 @@ namespace DotNet2019.Host.Diagnostics
     {
         private readonly DiagnosticListener _diagnosticListener;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IHubContext<DiagnosticsHub> _diagnosticsHub;
         private IDisposable _subscription;
         private List<IDisposable> _listenersSubscriptions = new List<IDisposable>();
         private static Dictionary<string, StringBuilder> traces = new Dictionary<string, StringBuilder>();
         private string requestBegin = "---------- REQUEST {0} BEGIN ----------\n";
         private string requestEnd = "---------- REQUEST {0} END ----------\n";
 
-        public HostingDiagnosticHandler(DiagnosticListener diagnosticListener, IServiceScopeFactory scopeFactory)
+        public HostingDiagnosticHandler(DiagnosticListener diagnosticListener, IServiceScopeFactory scopeFactory, IHubContext<DiagnosticsHub> diagnosticsHub)
         {
             _diagnosticListener = diagnosticListener;
             _scopeFactory = scopeFactory;
+            _diagnosticsHub = diagnosticsHub;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -65,10 +69,15 @@ namespace DotNet2019.Host.Diagnostics
                         var context = GetContext(@event.Value);
                         var requestId = context.Items["RequestId"].ToString();
 
-                        Console.WriteLine(traces[requestId.ToString()]
+                        var trace = (traces[requestId.ToString()]
                             .Append($"[HttpStop] Request finished with code {context.Response.StatusCode} \n")
-                            .Append(string.Format(requestEnd, requestId)
-                            .ToString()));
+                            .Append(string.Format(requestEnd, requestId))
+                            .ToString());
+
+                        Task.Run(async () =>
+                        {
+                            await _diagnosticsHub.Clients.All.SendAsync("SendDiagnotics", trace);
+                        });                        
 
                         traces.Remove(requestId);
                     }

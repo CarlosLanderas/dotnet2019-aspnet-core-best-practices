@@ -1,4 +1,5 @@
 using DotNet2019.Api.Infrastructure.Data;
+using DotNet2019.Api.Infrastructure.Hubs;
 using DotNet2019.Api.Infrastructure.Middleware;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
@@ -15,19 +16,23 @@ namespace DotNet2019.Api
         public static IServiceCollection ConfigureServices(IServiceCollection services, IWebHostEnvironment environment)
         {
             return services
+
                 .AddHttpContextAccessor()
                 .AddCustomMvc()
                 .AddCustomMiddlewares()
                 .AddCustomProblemDetails(environment)
                 .AddCustomApiBehaviour()
-                .AddCustomServices();
+                .AddCustomServices()
+                .AddSignalR()
+                .Services;
+                
         }
 
         public static IApplicationBuilder Configure(
             IApplicationBuilder app,
             Func<IApplicationBuilder, IApplicationBuilder> configureHost)
         {
-            return configureHost(app)
+            return configureHost(app)                
                 .UseProblemDetails()
                 .UseRouting()
                 .UseAuthentication()
@@ -46,6 +51,8 @@ namespace DotNet2019.Api
                     });
 
                     endpoints.MapSecretEndpoint().RequireAuthorization("ApiKeyPolicy");
+
+                    endpoints.MapHub<DiagnosticsHub>("/diagnostics-hub");
                 });
         }
     }

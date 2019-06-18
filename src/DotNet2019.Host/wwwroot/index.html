@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Dotnet 2019 - Asp.Net Core Best Practices</title>
+    <script type="text/javascript" src="lib/signalr.min.js"></script>
+    <style>
+        .logo {
+            height: auto;
+            width: auto;
+            max-width: 300px;
+            max-height: 300px;
+        }
+
+        #requests {
+            margin-top: 80px;
+        }
+
+        .request {
+          margin-top: 30px;
+          margin-bottom: 30px;      
+          font-weight:bold;
+        }
+
+        .request span {
+             color: rgb(255, 54, 84);
+             display:block;             
+        }
+
+    </style>
+</head>
+<body>
+    <img class="logo" src="https://www.dotnet2019.com/assets/logo-dotnet.svg" />
+
+    <div id="requests">
+
+    </div>
+
+</body>
+<script type="text/javascript">
+
+    var hubRoute = `${window.location.origin}/diagnostics-hub`;
+    (function () {
+
+        const requestsContainer = document.getElementById("requests");
+
+        const connectionBuilder = new signalR.HubConnectionBuilder()
+            .configureLogging("trace")
+            .withUrl(hubRoute);
+
+        connection = connectionBuilder.build();
+
+        connection.on('SendDiagnotics', function (trace) {
+            var lines = trace.split("\n");            
+            const div = document.createElement("div");
+                        
+            div.classList.add("request");
+
+            for (line of lines) {
+                const span = document.createElement("span");
+                
+                if(line.indexOf("REQUEST") !== -1) {
+                    span.style.color = "black";
+                }
+
+                span.innerText = line;
+                div.appendChild(span);
+            }
+
+            requestsContainer.prepend(div);
+        });
+
+        connection.start();
+
+    })();
+</script>
+</html>

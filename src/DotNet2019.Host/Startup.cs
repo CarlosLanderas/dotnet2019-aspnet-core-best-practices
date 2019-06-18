@@ -33,6 +33,8 @@ namespace DotNet2019.Host
             Api.Configuration.Configure(app, host =>
             {
                 return host
+                    .UseDefaultFiles()
+                    .UseStaticFiles()
                     .UseCustomHealthchecks()
                     .UseHeaderDiagnostics();                   
             });
