@@ -20,8 +20,6 @@ namespace DotNet2019.Host.Infrastructure.Authentication
             : base(options, logger, encoder, clock) {
             _listener = listener;
         }
-
-
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var apiKey = Context.Request.Headers[API_KEY_HEADER_NAME].FirstOrDefault();

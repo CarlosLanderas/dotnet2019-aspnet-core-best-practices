@@ -131,6 +131,7 @@ namespace DotNet2019.Host.Diagnostics
                     }
                     break;
 
+
                 case "Microsoft.EntityFrameworkCore.Database.Command.CommandExecuting":
                     {
                         using (var scope = _scopeFactory.CreateScope())

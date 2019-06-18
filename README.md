@@ -1,20 +1,21 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+<img src="https://www.dotnet2019.com/assets/logo-dotnet.svg" alt="dotnet2019" style="width:300px;"/>
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+# Asp.Net Core Good Practices 2019 Talk
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Speakers:
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Carlos Landeras - Web Team Lead at Plain Concepts ( [Github](https://github.com/CarlosLanderas) / [Twitter](https://twitter.com/Carlos_Lande))
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+Luis Ruiz Pavón - DevSecOps Lead at Plain Concepts ( [Github](https://github.com/lurumad) / [Twitter](https://twitter.com/luisruizpavon))
+
+## Talk Agenda:
+
+- Code instrumentation using System Diagnostics
+- Application resilience strategies
+- Asp.Net Core HealthChecks and Orchestrators (KubernetesReadiness and Liveness Probes) for high availability and resilience
+- Problem Details RFC 7807
+- Asp.Net Core ApiController and ApiBehaviourOptions (Convention over Configuration)
+- HttpContext Pipelines
+- Endpoint Routing
+- Endpoint Authorization (decoupled from MVC)
+- Docker testing strategies
