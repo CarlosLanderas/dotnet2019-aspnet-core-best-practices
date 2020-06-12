@@ -8,6 +8,9 @@ Carlos Landeras - Web Team Lead at Plain Concepts ( [Github](https://github.com/
 
 Luis Ruiz Pavón - DevSecOps Lead at Plain Concepts ( [Github](https://github.com/lurumad) / [Twitter](https://twitter.com/luisruizpavon))
 
+## Talk Youtube video
+https://www.youtube.com/watch?v=lSIPDDxfjuw
+
 ## Talk Agenda:
 
 - Code instrumentation using System Diagnostics
